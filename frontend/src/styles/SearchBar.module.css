@@ -1,0 +1,21 @@
+.searchBar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+.vegToggle {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  gap: 0.25rem;
+}

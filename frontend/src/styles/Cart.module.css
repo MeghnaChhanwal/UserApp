@@ -1,0 +1,198 @@
+
+
+.container {
+  max-width: 428px;
+  margin: auto;
+  padding: 16px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.cartItems {
+  margin-top: 16px;
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3f51b5;
+  margin: 0 0 0.6rem 0;
+  user-select: none;
+}
+
+.itemImage {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 12px;
+}
+
+.itemDetails {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.itemPrice {
+  color: #666;
+  margin: 4px 0;
+}
+
+.itemActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.itemActions button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 60px;
+  height: 40px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.instructions {
+  margin-top: 8%;
+  text-align: left;
+}
+
+.instructions button {
+  background-color: #ffc107;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 6px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.preview {
+  font-size: 14px;
+  color: #444;
+  margin-top: 6px;
+}
+
+.orderButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 16px;
+}
+
+.orderButtons button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #007bff;
+  border-radius: 6px;
+  background: white;
+  font-weight: 600;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.orderButtons .selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.priceSummary {
+  margin-top: 20px;
+  background-color: #f1f3f5;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.priceLine {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.grandTotal {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.userDetails {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+}
+
+.deliveryInfo {
+  margin-top: 16px;
+  background-color: #d1e7dd;
+  padding: 12px;
+  border-left: 4px solid #0f5132;
+  border-radius: 6px;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.emptyCart {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.emptyCartImage {
+  width: 150px;
+  margin-bottom: 12px;
+}
+
+
+@media (max-width: 480px) {
+  .cartItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .itemImage {
+    margin-bottom: 10px;
+  }
+
+  .orderButtons {
+    flex-direction: column;
+  }
+
+  .orderButtons button {
+    margin: 6px 0;
+  }
+
+  .userInput {
+    font-size: 14px;
+  }
+}
