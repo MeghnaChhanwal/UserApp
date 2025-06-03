@@ -1,86 +1,27 @@
-
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
-
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
+// ✅ MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB Connected"))
+.catch((err) => console.error("❌ MongoDB connection error:", err));
 
-const MONGO_URI = "mongodb://localhost:27017/User";
-
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
-
-
-const orderSchema = new mongoose.Schema({
-  cartItems: [
-    {
-      name: String,
-      price: Number,
-      quantity: Number,
-      prepTime: Number,
-      image: String,
-    }
-  ],
-  user: {
-    name: String,
-    mobile: String,
-    address: String,
-  },
-  instructions: String,
-  orderType: String, 
-  totalPrepTime: Number,
-  createdAt: { type: Date, default: Date.now }
+// ✅ Optional Home Route
+app.get("/", (req, res) => {
+  res.send("API is running ✅");
 });
 
-const Order = mongoose.model("Order", orderSchema);
-
-
-app.post("/api/cart", async (req, res) => {
-  try {
-    const { cartItems, user, instructions, orderType } = req.body;
-
-    
-    if (!cartItems || cartItems.length === 0) {
-      return res.status(400).json({ error: "Cart is empty" });
-    }
-    if (!user || !user.name || !user.mobile || !user.address) {
-      return res.status(400).json({ error: "User details missing" });
-    }
-    if (!orderType) {
-      return res.status(400).json({ error: "Order type missing" });
-    }
-
-    
-    const totalPrepTime = cartItems.reduce((sum, item) => {
-      return sum + (item.prepTime || 0) * (item.quantity || 1);
-    }, 0);
-
-    const newOrder = new Order({
-      cartItems,
-      user,
-      instructions,
-      orderType,
-      totalPrepTime
-    });
-
-    await newOrder.save();
-
-    res.status(201).json({ message: "Order placed successfully", orderId: newOrder._id });
-
-  } catch (error) {
-    console.error("Error saving order:", error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-
+// ✅ Start Server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
