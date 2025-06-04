@@ -28,7 +28,7 @@ const Cart = () => {
   useEffect(() => {
     const hasItems = cartItems.some(item => item.quantity > 0);
     if (!hasItems) {
-      navigate("/menu"); // Redirect if cart becomes empty
+      navigate("/menu");
     }
   }, [cartItems, navigate]);
 
@@ -68,10 +68,7 @@ const Cart = () => {
 
   const goToInstructions = () => {
     navigate("/instructions", {
-      state: {
-        cart: cartItems,
-        instructions
-      }
+      state: { cart: cartItems, instructions }
     });
   };
 
@@ -89,7 +86,7 @@ const Cart = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/cart", {
+      const response = await fetch("https://userapp-t4ft.onrender.com/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -113,10 +110,11 @@ const Cart = () => {
         });
       } else {
         alert(`Error: ${data.error || "Something went wrong"}`);
+        console.error("Backend Error:", data);
       }
     } catch (error) {
       alert("Failed to place order. Please try again later.");
-      console.error(error);
+      console.error("Network Error:", error);
     }
   };
 
@@ -136,21 +134,13 @@ const Cart = () => {
       <div className={styles.cartItems}>
         {filteredItems.length === 0 ? (
           <div className={styles.emptyCart}>
-            <img
-              src="/assets/empty-cart.png"
-              alt="Empty Cart"
-              className={styles.emptyCartImage}
-            />
+            <img src="/assets/empty-cart.png" alt="Empty Cart" className={styles.emptyCartImage} />
             <p>Your cart is empty</p>
           </div>
         ) : (
           filteredItems.map((item, index) => (
             <div className={styles.cartItem} key={index}>
-              <img
-                src={item.image}
-                alt={item.name}
-                className={styles.itemImage}
-              />
+              <img src={item.image} alt={item.name} className={styles.itemImage} />
               <div className={styles.itemDetails}>
                 <span className={styles.itemName}>{item.name}</span>
                 <p className={styles.itemPrice}>₹{item.price}</p>
@@ -166,9 +156,7 @@ const Cart = () => {
       </div>
 
       <div className={styles.instructions}>
-        <button onClick={goToInstructions}>
-          Add Cooking Instructions
-        </button>
+        <button onClick={goToInstructions}>Add Cooking Instructions</button>
         {instructions && <p className={styles.preview}>📝 {instructions}</p>}
       </div>
 
@@ -200,7 +188,6 @@ const Cart = () => {
           <span>Delivery Charge</span>
           <span>₹{deliveryCharge.toFixed(2)}</span>
         </div>
-
         <div className={`${styles.priceLine} ${styles.grandTotal}`}>
           <strong>Grand Total</strong>
           <strong>₹{grandTotal.toFixed(2)}</strong>

@@ -1,28 +1,18 @@
-// backend/models/Order.js
+const mongoose = require("mongoose");
 
-import mongoose from "mongoose";
-
-const OrderSchema = new mongoose.Schema(
-  {
-    cartItems: [
-      {
-        name: String,
-        price: Number,
-        quantity: Number,
-        image: String,
-      }
-    ],
-    user: {
-      name: String,
-      mobile: String,
-      address: String,
-    },
-    instructions: String,
+const OrderSchema = new mongoose.Schema({
+  items: Array,
+  user: {
+    name: String,
+    mobile: String,
+    address: String
   },
-  {
-    timestamps: true,
+  instructions: String,
+  orderType: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-);
+});
 
-const Order = mongoose.model("Order", OrderSchema);
-export default Order;
+module.exports = mongoose.model("Order", OrderSchema);

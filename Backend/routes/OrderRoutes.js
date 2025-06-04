@@ -1,7 +1,8 @@
-
+// /routes/orderRoutes.js
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
+
 router.post("/cart", async (req, res) => {
   try {
     const { cartItems, user, instructions, orderType } = req.body;
@@ -11,7 +12,7 @@ router.post("/cart", async (req, res) => {
       user,
       instructions,
       orderType,
-      createdAt: new Date() 
+      createdAt: new Date()
     });
 
     const savedOrder = await newOrder.save();
