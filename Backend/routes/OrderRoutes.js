@@ -1,40 +1,27 @@
+// routes/OrderRoutes.js
 const express = require("express");
 const router = express.Router();
-const Order = require("../models/Order");
+const Order = require("../models/Order"); // Import your Mongoose model
 
-// POST: Place an order
-router.post("/cart", async (req, res) => {
+// POST: Save a new order
+router.post("/", async (req, res) => {
   try {
-    const { cartItems, user, instructions, orderType } = req.body;
-
-    const newOrder = new Order({
-      items: cartItems,
-      user, // user must contain mobile, name, address
-      instructions,
-      orderType,
-      createdAt: new Date()
-    });
-
-    const savedOrder = await newOrder.save();
-
-    res.status(200).json({
-      message: "Order placed",
-      orderId: savedOrder._id,
-      orderTime: savedOrder.createdAt
-    });
-  } catch (err) {
-    console.error("Error placing order:", err);
-    res.status(500).json({ error: "Failed to place order" });
+    const newOrder = new Order(req.body);
+    await newOrder.save();
+    res.status(201).json({ message: "Order saved successfully" });
+  } catch (error) {
+    console.error("❌ Error saving order:", error);
+    res.status(500).json({ error: "Failed to save order" });
   }
 });
 
-// ✅ GET: Fetch all orders including mobile numbers
-router.get("/cart", async (req, res) => {
+// ✅ GET: Fetch all orders (for testing/debugging)
+router.get("/", async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 }); // sorted latest first
-    res.status(200).json({ orders }); // includes user.mobile by default
-  } catch (err) {
-    console.error("Error fetching orders:", err);
+    const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("❌ Error fetching orders:", error);
     res.status(500).json({ error: "Failed to fetch orders" });
   }
 });
