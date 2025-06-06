@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 5000; // ✅ Only declare once
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -12,7 +12,12 @@ app.use(express.json());
 
 // Routes
 const orderRoutes = require("./routes/OrderRoutes");
-app.use("/api/cart", orderRoutes); // Route prefix
+app.use("/api/cart", orderRoutes);
+
+// ✅ Add this to fix "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
