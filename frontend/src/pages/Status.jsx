@@ -6,32 +6,21 @@ const Status = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { orderId, user, grandTotal, totalPrepTime } = location.state || {};
+  // Try location.state first, fallback to localStorage, else empty object
+  const locationState = location.state || JSON.parse(localStorage.getItem("lastOrder")) || {};
+  const { orderId = "N/A", user = {}, grandTotal = 0, totalPrepTime = "N/A" } = locationState;
 
-  // If no orderId in state, redirect or show error
-  if (!orderId) {
-    return (
-      <div className={styles.statusWrapper}>
-        <div className={styles.card}>
-          <h2 className={styles.error}>⚠️ Invalid Order</h2>
-          <p>It looks like there's no valid order data.</p>
-          <button className={styles.backButton} onClick={() => navigate("/menu")}>
-            Back to Menu
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // Always show data, no error message, fallback values used if missing
 
   return (
     <div className={styles.statusWrapper}>
       <div className={styles.card}>
-        <h2 className={styles.success}>✅ Order Placed Successfully!</h2>
+        <h2 className={styles.success}>✅ Order Status</h2>
 
         <div className={styles.details}>
           <p><strong>Order ID:</strong> {orderId}</p>
-          <p><strong>Name:</strong> {user?.name || "Guest"}</p>
-          <p><strong>Total:</strong> ₹{grandTotal.toFixed(2)}</p>
+          <p><strong>Name:</strong> {user.name || "Guest"}</p>
+          <p><strong>Total:</strong> ₹{Number(grandTotal).toFixed(2)}</p>
           <p><strong>Estimated Prep Time:</strong> {totalPrepTime} mins</p>
         </div>
 
