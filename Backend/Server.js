@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const orderRoutes = require("./routes/OrderRoutes");
-app.use("/api", orderRoutes); // Enables /api/cart
+app.use("/api/cart", orderRoutes); // Enables /api/cart
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

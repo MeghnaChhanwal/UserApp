@@ -5,7 +5,7 @@ import Order from "../models/Order.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/cart", async (req, res) => {
   const { cartItems, user, instructions } = req.body;
 
   if (!cartItems || !user?.name || !user?.mobile || !user?.address) {
